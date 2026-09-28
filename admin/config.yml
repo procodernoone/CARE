@@ -1,0 +1,98 @@
+backend:
+  name: github
+  repo: YOUR-GITHUB-USERNAME/YOUR-REPO-NAME
+  branch: main
+  base_url: https://decap-proxy.deno.dev
+
+media_folder: "images/uploads"
+public_folder: "images/uploads"
+
+collections:
+  - name: "site"
+    label: "Site Settings (Stats & Contact)"
+    files:
+      - file: "data/content.js"
+        label: "Stats & Contact"
+        name: "site"
+        fields:
+          - { label: "Awards Won (number)", name: "stat_awards", widget: "string" }
+          - { label: "Awards — show + sign", name: "stat_awards_plus", widget: "boolean" }
+          - { label: "Team Members (number)", name: "stat_members", widget: "string" }
+          - { label: "Members — show + sign", name: "stat_members_plus", widget: "boolean" }
+          - { label: "Projects (number)", name: "stat_projects", widget: "string" }
+          - { label: "Projects — show + sign", name: "stat_projects_plus", widget: "boolean" }
+          - { label: "Years of Impact (number)", name: "stat_years", widget: "string" }
+          - { label: "Years — show + sign", name: "stat_years_plus", widget: "boolean" }
+          - { label: "Contact Email", name: "contact_email", widget: "string" }
+          - { label: "Contact Location", name: "contact_location", widget: "string" }
+          - { label: "Contact Social Handle", name: "contact_social", widget: "string" }
+
+  - name: "team"
+    label: "Team Members"
+    files:
+      - file: "data/content.js"
+        label: "Team"
+        name: "team"
+        fields:
+          - label: "Members"
+            name: "members"
+            widget: "list"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Role", name: "role", widget: "string" }
+              - { label: "Photo", name: "photo", widget: "image", required: false }
+              - { label: "LinkedIn URL", name: "linkedin", widget: "string", required: false }
+              - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
+
+  - name: "gallery"
+    label: "Gallery"
+    files:
+      - file: "data/content.js"
+        label: "Photos"
+        name: "gallery"
+        fields:
+          - label: "Photos"
+            name: "photos"
+            widget: "list"
+            fields:
+              - { label: "Photo", name: "image", widget: "image", required: false }
+              - { label: "Fallback Emoji (if no photo)", name: "emoji", widget: "string", required: false }
+              - { label: "Category", name: "cat", widget: "select", options: ["events","lab","team","awards"] }
+              - { label: "Size", name: "size", widget: "select", options: ["","wide","tall"], required: false }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Subtitle", name: "subtitle", widget: "string" }
+              - { label: "Description (shown in lightbox)", name: "desc", widget: "text" }
+
+  - name: "achievements"
+    label: "Achievements"
+    files:
+      - file: "data/content.js"
+        label: "Achievement List"
+        name: "achievements"
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Year", name: "year", widget: "string" }
+              - { label: "Date (optional)", name: "date", widget: "string", required: false }
+              - { label: "Badge", name: "badge", widget: "select", options: ["International","National"] }
+              - { label: "Facebook Post Link", name: "link", widget: "string", required: false }
+
+  - name: "news"
+    label: "Recent News"
+    files:
+      - file: "data/content.js"
+        label: "News Items"
+        name: "news"
+        fields:
+          - label: "Items (newest first)"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Emoji", name: "emoji", widget: "string" }
+              - { label: "Date", name: "date", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Link", name: "link", widget: "string", required: false }
