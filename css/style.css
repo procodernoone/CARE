@@ -1,5 +1,5 @@
 /* ============================================================
-   Team C.A.R.E — style.css (V3 — light green / dark cyan)
+   Team C.A.R.E — style.css (V4 — light green / dark cyan)
    ============================================================ */
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -11,38 +11,36 @@ a { color: inherit; text-decoration: none; }
 ul { list-style: none; }
 
 /* ============================================================
-   LIGHT THEME (default) — subtle green base + teal accents
+   LIGHT THEME (default) — green base + green accents
    ============================================================ */
 :root {
   --bg: #ffffff;
-  --bg2: #f3f8f4;           /* very subtle green tint */
+  --bg2: #f2f9f4;
   --surface: #ffffff;
-  --surface2: #e9f4ec;
-  --surface3: #dcefe1;
+  --surface2: #e7f4eb;
+  --surface3: #d9eddf;
 
-  --text: #0f2419;
-  --text-dim: #2a4d3a;
-  --muted: #557a68;
+  --text: #0c2016;
+  --text-dim: #294a38;
+  --muted: #527a64;
 
-  --border: rgba(22, 163, 74, 0.14);
-  --border-strong: rgba(22, 163, 74, 0.28);
+  --border: rgba(22, 163, 74, 0.16);
+  --border-strong: rgba(22, 163, 74, 0.32);
 
-  /* Blue-green (teal) accent */
-  --accent: #0e7490;        /* deep teal */
-  --accent-light: #0891b2;  /* brighter cyan-teal */
-  --accent-deep: #075985;   /* darkest teal-blue */
-  --accent-glow: rgba(14, 116, 144, 0.18);
+  --accent: #15803d;
+  --accent-light: #22c55e;
+  --accent-deep: #14532d;
+  --accent-glow: rgba(21, 128, 61, 0.18);
 
-  /* Secondary green accent (for icons/highlights) */
   --accent-2: #16a34a;
   --accent-2-glow: rgba(22, 163, 74, 0.15);
 
   --glass: rgba(255, 255, 255, 0.88);
-  --glass-border: rgba(22, 163, 74, 0.16);
+  --glass-border: rgba(22, 163, 74, 0.18);
 
-  --shadow-sm: 0 1px 3px rgba(15, 36, 25, 0.06);
-  --shadow-md: 0 4px 16px rgba(15, 36, 25, 0.08);
-  --shadow-lg: 0 12px 40px rgba(15, 36, 25, 0.10);
+  --shadow-sm: 0 1px 3px rgba(12, 32, 22, 0.06);
+  --shadow-md: 0 4px 16px rgba(12, 32, 22, 0.08);
+  --shadow-lg: 0 12px 40px rgba(12, 32, 22, 0.10);
 
   --r-sm: 6px;
   --r-md: 10px;
@@ -52,10 +50,16 @@ ul { list-style: none; }
   --font-display: 'Bebas Neue', 'Rajdhani', sans-serif;
   --font-body: 'Rajdhani', system-ui, -apple-system, sans-serif;
   --font-mono: 'Space Mono', 'Courier New', monospace;
+
+  /* Green gradient system — shared across sections */
+  --green-100: #f4fbf6;
+  --green-200: #e6f7ec;
+  --green-300: #d4f0dd;
+  --green-400: #b9e6c7;
 }
 
 /* ============================================================
-   DARK THEME (unchanged from previous version)
+   DARK THEME
    ============================================================ */
 [data-theme="dark"] {
   --bg: #080d18;
@@ -100,7 +104,6 @@ body {
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* Font Awesome default alignment */
 .fa-solid, .fa-regular, .fa-brands, .fas, .far, .fab {
   display: inline-block;
   line-height: 1;
@@ -260,13 +263,10 @@ nav {
 [data-theme="dark"] .theme-toggle-thumb { transform: translateX(24px); }
 .theme-toggle-thumb .icon-moon,
 .theme-toggle-thumb .toggle-moon { display: inline; }
-
 .theme-toggle-thumb .icon-sun,
 .theme-toggle-thumb .toggle-sun { display: none; }
-
 [data-theme="dark"] .theme-toggle-thumb .icon-moon,
 [data-theme="dark"] .theme-toggle-thumb .toggle-moon { display: none; }
-
 [data-theme="dark"] .theme-toggle-thumb .icon-sun,
 [data-theme="dark"] .theme-toggle-thumb .toggle-sun { display: inline; }
 
@@ -365,7 +365,6 @@ nav {
   background: var(--bg);
 }
 
-/* Light theme hero — soft green gradient + radial glow */
 #hero::before {
   content: "";
   position: absolute;
@@ -373,16 +372,42 @@ nav {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 78% 42%, rgba(22, 163, 74, 0.28) 0%, rgba(22, 163, 74, 0.10) 35%, transparent 68%),
-    radial-gradient(circle at 20% 78%, rgba(21, 128, 61, 0.20) 0%, rgba(21, 128, 61, 0.06) 40%, transparent 70%),
-    radial-gradient(circle at 50% 10%, rgba(34, 197, 94, 0.14) 0%, transparent 55%),
-    linear-gradient(180deg, #e6f7ec 0%, #f4fbf6 45%, #e0f2e6 100%);
+    radial-gradient(circle at 78% 42%, rgba(22, 163, 74, 0.38) 0%, rgba(22, 163, 74, 0.14) 38%, transparent 70%),
+    radial-gradient(circle at 20% 78%, rgba(21, 128, 61, 0.26) 0%, rgba(21, 128, 61, 0.10) 42%, transparent 72%),
+    radial-gradient(circle at 50% 10%, rgba(34, 197, 94, 0.20) 0%, transparent 58%),
+    linear-gradient(180deg, #dff4e6 0%, #f2faf5 45%, #d6efdd 100%);
+  animation: heroBreath 10s ease-in-out infinite alternate;
+  will-change: transform, opacity;
 }
 
-/* Dark theme — no gradient, keep the flat bg */
-[data-theme="dark"] #hero::before {
+#hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(34, 197, 94, 0.18) 0%, transparent 52%);
+  animation: heroDrift 16s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+@keyframes heroBreath {
+  0%   { transform: scale(1);    opacity: 1; }
+  100% { transform: scale(1.06); opacity: 0.86; }
+}
+
+@keyframes heroDrift {
+  0%   { transform: translate(0, 0);       opacity: 0.6; }
+  50%  { transform: translate(6%, -4%);    opacity: 1; }
+  100% { transform: translate(-4%, 3%);    opacity: 0.7; }
+}
+
+[data-theme="dark"] #hero::before,
+[data-theme="dark"] #hero::after {
   display: none;
 }
+
 #heroBgCanvas {
   position: absolute;
   inset: 0;
@@ -390,7 +415,7 @@ nav {
   height: 100%;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.5;
+  opacity: 0.22;
 }
 [data-theme="dark"] #heroBgCanvas { opacity: 0.7; }
 
@@ -438,15 +463,34 @@ nav {
 
 section { padding: 88px 60px; }
 
-#what { background: var(--bg2); }
-#about { background: var(--bg); }
+/* Each section gets a subtly different green tint so scrolling feels alive */
+#what {
+  background: linear-gradient(180deg, var(--green-200) 0%, var(--green-100) 100%);
+  border-top: 1px solid var(--border);
+}
+#about {
+  background: linear-gradient(180deg, #ffffff 0%, var(--green-100) 100%);
+}
 #stats {
-  background: var(--surface2);
+  background: linear-gradient(90deg, var(--green-200) 0%, var(--green-300) 50%, var(--green-200) 100%);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   padding: 56px 60px;
 }
-#recent-home { background: var(--bg2); border-top: 1px solid var(--border); }
+#recent-home {
+  background: linear-gradient(180deg, var(--green-100) 0%, var(--green-200) 100%);
+  border-top: 1px solid var(--border);
+}
+
+/* Dark theme overrides for sections */
+[data-theme="dark"] #what,
+[data-theme="dark"] #about,
+[data-theme="dark"] #recent-home {
+  background: var(--bg2);
+}
+[data-theme="dark"] #stats {
+  background: var(--surface2);
+}
 
 /* ============================================================
    CARDS
@@ -537,9 +581,7 @@ section { padding: 88px 60px; }
   justify-content: flex-end;
   box-shadow: var(--shadow-md);
 }
-.video-card video {
-  display: block;
-}
+.video-card video { display: block; }
 .video-bg {
   position: absolute;
   inset: 0;
@@ -710,7 +752,6 @@ section { padding: 88px 60px; }
   text-align: center;
 }
 
-/* Projects */
 .care-wheelchair-layout {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -1055,7 +1096,6 @@ section { padding: 88px 60px; }
 .gallery-overlay h4 { color: #fff; font-size: 13px; font-weight: 700; }
 .gallery-overlay p { color: rgba(255,255,255,0.85); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
 
-/* Lightbox */
 .lightbox {
   position: fixed;
   inset: 0;
@@ -1278,10 +1318,12 @@ section { padding: 88px 60px; }
    FOOTER
    ============================================================ */
 footer {
-  background: var(--bg2);
+  background: linear-gradient(180deg, var(--green-200) 0%, var(--green-300) 100%);
   border-top: 1px solid var(--border);
   padding: 60px 60px 24px;
 }
+[data-theme="dark"] footer { background: var(--bg2); }
+
 .footer-main {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
@@ -1391,6 +1433,7 @@ footer {
     transform: none !important;
   }
   #heroBgCanvas { display: none; }
+  #hero::before, #hero::after { animation: none !important; }
 }
 
 /* ============================================================
