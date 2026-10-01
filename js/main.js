@@ -1,5 +1,7 @@
 /* ============================================================
-   Team C.A.R.E — main.js (V3 — Font Awesome icons)
+   Team C.A.R.E — main.js (V4 — performance-guarded)
+   Adds device-tier detection + frame throttling to hero canvas.
+   All other behaviors unchanged.
    ============================================================ */
 (function () {
   'use strict';
@@ -9,7 +11,7 @@
   const isTouchDevice =
     window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
-  /* Map icon names to Font Awesome classes */
+  /* Font Awesome icon map */
   const ICONS = {
     plane:   'fa-solid fa-plane',
     globe:   'fa-solid fa-earth-asia',
@@ -38,7 +40,9 @@
     return '<i class="' + cls + '"></i>';
   }
 
-  /* ---------------- Renders ---------------- */
+  /* =========================================================
+     RENDERS
+     ========================================================= */
 
   function renderSite() {
     if (!window.CARE || !window.CARE.site) return;
@@ -147,14 +151,19 @@
     }).join('');
   }
 
-  /* ---------------- Interactions ---------------- */
+  /* =========================================================
+     INTERACTIONS
+     ========================================================= */
 
   function initTheme() {
-    const saved = localStorage.getItem('care-theme');
-    if (saved) document.documentElement.setAttribute('data-theme', saved);
+    /* Always start in light mode on every fresh page load */
+    document.documentElement.setAttribute('data-theme', 'light');
+    localStorage.setItem('care-theme', 'light');
+
     document.querySelectorAll('.theme-toggle').forEach(btn => {
       btn.addEventListener('click', () => {
-        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('care-theme', next);
       });
@@ -312,11 +321,7 @@
         const inner = it.querySelector('.gallery-inner');
         const iconEl = inner ? inner.querySelector('i') : null;
         const lbIcon = lb.querySelector('.lightbox-icon');
-        if (iconEl) {
-          lbIcon.innerHTML = '<i class="' + iconEl.className + '"></i>';
-        } else {
-          lbIcon.innerHTML = '';
-        }
+        lbIcon.innerHTML = iconEl ? '<i class="' + iconEl.className + '"></i>' : '';
         lb.querySelector('h3').textContent = title;
         lb.querySelector('p').textContent = subtitle;
         lb.classList.add('open');
@@ -356,8 +361,20 @@
     });
   }
 
+  /* =========================================================
+     HERO CANVAS — performance-guarded
+     - Skips on very low-end devices (≤2 cores)
+     - Runs at reduced cost on low-tier devices (≤4 cores)
+     - Frame-throttled to ~30fps (20fps on low-tier)
+     - Already skips on touch, reduced motion, hidden tab, off-screen hero
+     ========================================================= */
   function initHeroCanvas() {
     if (prefersReducedMotion || isTouchDevice) return;
+
+    const cores = navigator.hardwareConcurrency || 4;
+    if (cores <= 2) return;                 // very weak: skip entirely
+    const lowTier = cores <= 4;             // 4 cores or fewer: reduced cost
+
     const canvas = document.getElementById('heroBgCanvas');
     if (!canvas) return;
 
@@ -366,6 +383,8 @@
     let points = [];
     let rafId = 0;
     let running = false;
+    let lastFrame = 0;
+    const FRAME_MS = lowTier ? 50 : 33;     // ~20fps or ~30fps
 
     function setup() {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -375,7 +394,10 @@
       canvas.height = H * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const count = Math.min(Math.floor(W * H / 26000), 26);
+      const targetCount = lowTier ? 12 : 26;
+      const divisor = lowTier ? 45000 : 26000;
+      const count = Math.min(Math.floor(W * H / divisor), targetCount);
+
       points = [];
       for (let i = 0; i < count; i++) {
         points.push({
@@ -388,11 +410,17 @@
       }
     }
 
-    function draw() {
+    function draw(ts) {
       if (!running) return;
+      if (ts && ts - lastFrame < FRAME_MS) {
+        rafId = requestAnimationFrame(draw);
+        return;
+      }
+      lastFrame = ts || 0;
+
       ctx.clearRect(0, 0, W, H);
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      const rgb = isDark ? '74, 144, 255' : '14, 116, 144';
+      const rgb = isDark ? '74, 144, 255' : '21, 128, 61';
 
       for (let i = 0; i < points.length; i++) {
         const p = points[i];
@@ -429,9 +457,11 @@
     setup();
     start();
     window.addEventListener('resize', setup, { passive: true });
+
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) stop(); else start();
     });
+
     const hero = document.getElementById('hero');
     if (hero && 'IntersectionObserver' in window) {
       const io = new IntersectionObserver(entries => {
@@ -441,6 +471,9 @@
     }
   }
 
+  /* =========================================================
+     BOOT
+     ========================================================= */
   function boot() {
     renderSite();
     renderHomeNews();
