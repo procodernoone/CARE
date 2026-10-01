@@ -1,7 +1,6 @@
 /* ============================================================
-   Team C.A.R.E — content.js
-   Single source of truth for all editable content.
-   Edit values here, no rebuild needed — refresh the page.
+   Team C.A.R.E — content.js (V3 — Font Awesome icon names)
+   Icon names map to Font Awesome classes in js/main.js.
    ============================================================ */
 window.CARE = {
 
@@ -17,33 +16,33 @@ window.CARE = {
 
   team: {
     members: [
-      { name: "Team Lead",      role: "Founder & Lead",   photo: "", linkedin: "", facebook: "" },
-      { name: "Research Head",  role: "R&D Division",     photo: "", linkedin: "", facebook: "" },
-      { name: "Software Lead",  role: "AI / ML Engineer", photo: "", linkedin: "", facebook: "" },
-      { name: "Hardware Lead",  role: "Electronics & IoT",photo: "", linkedin: "", facebook: "" },
-      { name: "Design Lead",    role: "UX / Mechanical",  photo: "", linkedin: "", facebook: "" }
+      { name: "Team Lead",      role: "Founder & Lead",    photo: "", linkedin: "", facebook: "" },
+      { name: "Research Head",  role: "R&D Division",      photo: "", linkedin: "", facebook: "" },
+      { name: "Software Lead",  role: "AI / ML Engineer",  photo: "", linkedin: "", facebook: "" },
+      { name: "Hardware Lead",  role: "Electronics & IoT", photo: "", linkedin: "", facebook: "" },
+      { name: "Design Lead",    role: "UX / Mechanical",   photo: "", linkedin: "", facebook: "" }
     ]
   },
 
   gallery: {
     photos: [
-      { image: "", emoji: "👥", cat: "team",   size: "wide", title: "Team Photo",           subtitle: "ROBOFEST 2024",       desc: "Our full team after winning the 1st place trophy at the national ROBOFEST 2024 competition." },
-      { image: "", emoji: "🔧", cat: "lab",    size: "",     title: "Lab Session",          subtitle: "Wheelchair Build",    desc: "Engineers working on the CARE Wheelchair v2.0 chassis and electronics in our campus lab." },
-      { image: "", emoji: "🏆", cat: "awards", size: "tall", title: "Award Ceremony",       subtitle: "ROBOFEST 2024",       desc: "Team CARE receives the national 1st place trophy at ROBOFEST 2024." },
-      { image: "", emoji: "🌏", cat: "events", size: "",     title: "Asian Robotics Forum", subtitle: "International Event", desc: "Our team representing Bangladesh at the Asian Robotics Forum 2024." },
-      { image: "", emoji: "💻", cat: "lab",    size: "",     title: "AI Development",       subtitle: "Software Lab",        desc: "Programming and testing the AI obstacle detection module for CARE Wheelchair v2.0." },
-      { image: "", emoji: "📺", cat: "events", size: "",     title: "TV Feature",           subtitle: "National Coverage",   desc: "Team CARE featured on national television showcasing our CARE Wheelchair innovation." },
-      { image: "", emoji: "♿", cat: "events", size: "wide", title: "Wheelchair Demo Day",  subtitle: "Innovation Expo",     desc: "Live demonstration of CARE Wheelchair v2.0 at the national innovation expo." },
-      { image: "", emoji: "🎓", cat: "team",   size: "",     title: "IEEE Conference",      subtitle: "Research Paper",      desc: "Team members presenting research findings at the IEEE Student Conference 2023." }
+      { image: "", icon: "users",  cat: "team",   size: "wide", title: "Team Photo",           subtitle: "ROBOFEST 2024",       desc: "Our full team after winning the 1st place trophy at the national ROBOFEST 2024 competition." },
+      { image: "", icon: "wrench", cat: "lab",    size: "",     title: "Lab Session",          subtitle: "Wheelchair Build",    desc: "Engineers working on the CARE Wheelchair v2.0 chassis and electronics in our campus lab." },
+      { image: "", icon: "trophy", cat: "awards", size: "tall", title: "Award Ceremony",       subtitle: "ROBOFEST 2024",       desc: "Team CARE receives the national 1st place trophy at ROBOFEST 2024." },
+      { image: "", icon: "globe",  cat: "events", size: "",     title: "Asian Robotics Forum", subtitle: "International Event", desc: "Our team representing Bangladesh at the Asian Robotics Forum 2024." },
+      { image: "", icon: "laptop", cat: "lab",    size: "",     title: "AI Development",       subtitle: "Software Lab",        desc: "Programming and testing the AI obstacle detection module for CARE Wheelchair v2.0." },
+      { image: "", icon: "tv",     cat: "events", size: "",     title: "TV Feature",           subtitle: "National Coverage",   desc: "Team CARE featured on national television showcasing our CARE Wheelchair innovation." },
+      { image: "", icon: "wheel",  cat: "events", size: "wide", title: "Wheelchair Demo Day",  subtitle: "Innovation Expo",     desc: "Live demonstration of CARE Wheelchair v2.0 at the national innovation expo." },
+      { image: "", icon: "cap",    cat: "team",   size: "",     title: "IEEE Conference",      subtitle: "Research Paper",      desc: "Team members presenting research findings at the IEEE Student Conference 2023." }
     ]
   },
 
   news: {
     items: [
-      { emoji: "✈️", date: "Sept 20, 2026", title: "Team Represents Bangladesh at WICE Malaysia",       link: "https://www.facebook.com/teamcare.bd" },
-      { emoji: "🌍", date: "Dec 01, 2025",  title: "APICTA Awards 2025 Winner in Taiwan",                link: "https://www.facebook.com/teamcare.bd" },
-      { emoji: "🏆", date: "Oct 18, 2025",  title: "Champion at Bangladesh ICT & Innovation Award",      link: "https://www.facebook.com/teamcare.bd" },
-      { emoji: "🏅", date: "May 03, 2025",  title: "Champion at 16th DRMC Science Carnival",             link: "https://www.facebook.com/teamcare.bd" }
+      { icon: "plane",  date: "Sept 20, 2026", title: "Team Represents Bangladesh at WICE Malaysia",   link: "https://www.facebook.com/teamcare.bd" },
+      { icon: "globe",  date: "Dec 01, 2025",  title: "APICTA Awards 2025 Winner in Taiwan",            link: "https://www.facebook.com/teamcare.bd" },
+      { icon: "trophy", date: "Oct 18, 2025",  title: "Champion at Bangladesh ICT & Innovation Award",  link: "https://www.facebook.com/teamcare.bd" },
+      { icon: "medal",  date: "May 03, 2025",  title: "Champion at 16th DRMC Science Carnival",         link: "https://www.facebook.com/teamcare.bd" }
     ]
   },
 
