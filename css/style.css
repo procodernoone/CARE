@@ -505,6 +505,9 @@ section { padding: 88px 60px; }
   justify-content: flex-end;
   box-shadow: var(--shadow-md);
 }
+.video-card video {
+  display: block;
+}
 .video-bg {
   position: absolute;
   inset: 0;
