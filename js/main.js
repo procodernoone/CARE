@@ -1,7 +1,5 @@
 /* ============================================================
-   Team C.A.R.E — main.js (V2, minimal)
-   Light-first. Canvas kept but soft + paused off-screen.
-   Cursor uses transform only. All handlers passive.
+   Team C.A.R.E — main.js (V3 — Font Awesome icons)
    ============================================================ */
 (function () {
   'use strict';
@@ -10,6 +8,37 @@
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isTouchDevice =
     window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+  /* Map icon names to Font Awesome classes */
+  const ICONS = {
+    plane:   'fa-solid fa-plane',
+    globe:   'fa-solid fa-earth-asia',
+    trophy:  'fa-solid fa-trophy',
+    medal:   'fa-solid fa-medal',
+    users:   'fa-solid fa-users',
+    wrench:  'fa-solid fa-wrench',
+    laptop:  'fa-solid fa-laptop-code',
+    tv:      'fa-solid fa-tv',
+    wheel:   'fa-solid fa-wheelchair',
+    cap:     'fa-solid fa-graduation-cap',
+    star:    'fa-solid fa-star',
+    user:    'fa-solid fa-user',
+    mail:    'fa-solid fa-envelope',
+    pin:     'fa-solid fa-location-dot',
+    phone:   'fa-solid fa-mobile-screen',
+    book:    'fa-solid fa-book-open',
+    bolt:    'fa-solid fa-bolt',
+    chip:    'fa-solid fa-microchip',
+    gear:    'fa-solid fa-gear',
+    heart:   'fa-solid fa-heart-pulse',
+    brain:   'fa-solid fa-brain'
+  };
+  function icon(name, fallback) {
+    const cls = ICONS[name] || ICONS[fallback] || 'fa-solid fa-star';
+    return '<i class="' + cls + '"></i>';
+  }
+
+  /* ---------------- Renders ---------------- */
 
   function renderSite() {
     if (!window.CARE || !window.CARE.site) return;
@@ -30,46 +59,40 @@
     if (form && S.contact_email) form.action = 'mailto:' + S.contact_email;
   }
 
+  function newsCardHTML(item) {
+    return '<div class="news-card fade-up">' +
+      '<div class="news-thumb">' + icon(item.icon, 'star') + '</div>' +
+      '<div class="news-body">' +
+        '<div class="news-date">' + (item.date || '') + '</div>' +
+        '<h4>' + (item.title || '') + '</h4>' +
+        '<a href="' + (item.link || '#') + '" target="_blank" rel="noreferrer" class="news-arrow">' +
+          '<i class="fa-solid fa-arrow-right"></i>' +
+        '</a>' +
+      '</div>' +
+    '</div>';
+  }
+
   function renderHomeNews() {
     const el = document.getElementById('homeNewsGrid');
     if (!el || !window.CARE || !window.CARE.news) return;
-    el.innerHTML = window.CARE.news.items.slice(0, 4).map(item =>
-      '<div class="news-card fade-up">' +
-        '<div class="news-thumb">' + (item.emoji || '📰') + '</div>' +
-        '<div class="news-body">' +
-          '<div class="news-date">' + (item.date || '') + '</div>' +
-          '<h4>' + (item.title || '') + '</h4>' +
-          '<a href="' + (item.link || '#') + '" target="_blank" rel="noreferrer" class="news-arrow">→</a>' +
-        '</div>' +
-      '</div>'
-    ).join('');
+    el.innerHTML = window.CARE.news.items.slice(0, 4).map(newsCardHTML).join('');
   }
 
   function renderNews() {
     const el = document.getElementById('newsGrid');
     if (!el || !window.CARE || !window.CARE.news) return;
-    el.innerHTML = window.CARE.news.items.map(item =>
-      '<div class="news-card fade-up">' +
-        '<div class="news-thumb">' + (item.emoji || '📰') + '</div>' +
-        '<div class="news-body">' +
-          '<div class="news-date">' + (item.date || '') + '</div>' +
-          '<h4>' + (item.title || '') + '</h4>' +
-          '<a href="' + (item.link || '#') + '" target="_blank" rel="noreferrer" class="news-arrow">→</a>' +
-        '</div>' +
-      '</div>'
-    ).join('');
+    el.innerHTML = window.CARE.news.items.map(newsCardHTML).join('');
   }
 
   function renderAwards() {
     const el = document.getElementById('awardsList');
     if (!el || !window.CARE || !window.CARE.achievements) return;
-    const starSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:40px;height:40px;color:var(--accent)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"></path></svg>';
     el.innerHTML = window.CARE.achievements.items.map(a => {
       const eyebrow = (a.badge || '') + ' · ' + (a.year || '');
       const badge = a.date || a.year || '';
       const imgSrc = a.image
         ? '<img src="' + a.image + '" alt="' + (a.title || '').replace(/"/g, '&quot;') + '" loading="lazy">'
-        : '<div class="care-award-placeholder">' + starSVG + '</div>';
+        : '<div class="care-award-placeholder">' + icon('trophy') + '</div>';
       const descAttr = (a.desc || '').replace(/"/g, '&quot;');
       return (
         '<article class="care-award" data-desc="' + descAttr + '" data-link="' + (a.link || '#') + '">' +
@@ -78,7 +101,7 @@
             '<div class="care-award-eyebrow">' + eyebrow + '</div>' +
             '<h3>' + (a.title || '') + '</h3>' +
             '<span class="care-award-badge">' + badge + '</span>' +
-            '<div><button class="btn-outline">See details →</button></div>' +
+            '<div><button class="btn-outline">See details <i class="fa-solid fa-arrow-right"></i></button></div>' +
           '</div>' +
         '</article>'
       );
@@ -91,10 +114,10 @@
     el.innerHTML = window.CARE.team.members.map(m => {
       const avatar = m.photo
         ? '<div class="member-avatar" style="background-image:url(\'' + m.photo + '\');background-size:cover;background-position:center"></div>'
-        : '<div class="member-avatar">👤</div>';
+        : '<div class="member-avatar">' + icon('user') + '</div>';
       const socials = [];
-      if (m.linkedin) socials.push('<a href="' + m.linkedin + '" target="_blank" rel="noreferrer">in</a>');
-      if (m.facebook) socials.push('<a href="' + m.facebook + '" target="_blank" rel="noreferrer">f</a>');
+      if (m.linkedin) socials.push('<a href="' + m.linkedin + '" target="_blank" rel="noreferrer"><i class="fa-brands fa-linkedin-in"></i></a>');
+      if (m.facebook) socials.push('<a href="' + m.facebook + '" target="_blank" rel="noreferrer"><i class="fa-brands fa-facebook-f"></i></a>');
       return (
         '<div class="member-card fade-up">' + avatar +
           '<h4>' + (m.name || '') + '</h4>' +
@@ -112,7 +135,7 @@
       const cls = 'gallery-item' + (p.size ? ' ' + p.size : '');
       const inner = p.image
         ? '<div class="gallery-inner" style="background-image:url(\'' + p.image + '\');background-size:cover;background-position:center"></div>'
-        : '<div class="gallery-inner">' + (p.emoji || '📷') + '</div>';
+        : '<div class="gallery-inner">' + icon(p.icon, 'users') + '</div>';
       return (
         '<div class="' + cls + '" data-cat="' + (p.cat || '') + '">' + inner +
           '<div class="gallery-overlay">' +
@@ -123,6 +146,8 @@
       );
     }).join('');
   }
+
+  /* ---------------- Interactions ---------------- */
 
   function initTheme() {
     const saved = localStorage.getItem('care-theme');
@@ -273,7 +298,7 @@
     if (!items.length) return;
     const lb = document.createElement('div');
     lb.className = 'lightbox';
-    lb.innerHTML = '<div class="lightbox-inner"><button class="lightbox-close">✕</button><span class="lightbox-emoji"></span><h3></h3><p></p></div>';
+    lb.innerHTML = '<div class="lightbox-inner"><button class="lightbox-close"><i class="fa-solid fa-xmark"></i></button><span class="lightbox-icon"></span><h3></h3><p></p></div>';
     document.body.appendChild(lb);
     const close = () => lb.classList.remove('open');
     lb.querySelector('.lightbox-close').addEventListener('click', close);
@@ -285,7 +310,13 @@
         const title = overlay && overlay.querySelector('h4') ? overlay.querySelector('h4').textContent : '';
         const subtitle = overlay && overlay.querySelector('p') ? overlay.querySelector('p').textContent : '';
         const inner = it.querySelector('.gallery-inner');
-        lb.querySelector('.lightbox-emoji').textContent = inner ? inner.textContent.trim() : '';
+        const iconEl = inner ? inner.querySelector('i') : null;
+        const lbIcon = lb.querySelector('.lightbox-icon');
+        if (iconEl) {
+          lbIcon.innerHTML = '<i class="' + iconEl.className + '"></i>';
+        } else {
+          lbIcon.innerHTML = '';
+        }
         lb.querySelector('h3').textContent = title;
         lb.querySelector('p').textContent = subtitle;
         lb.classList.add('open');
@@ -298,7 +329,7 @@
     if (!buttons.length) return;
     const modal = document.createElement('div');
     modal.className = 'lightbox';
-    modal.innerHTML = '<div class="care-award-modal"><button class="lightbox-close">✕</button><h3></h3><p></p><a class="btn-outline aw-link" target="_blank" rel="noreferrer" href="#">View on Facebook →</a></div>';
+    modal.innerHTML = '<div class="care-award-modal"><button class="lightbox-close"><i class="fa-solid fa-xmark"></i></button><h3></h3><p></p><a class="btn-outline aw-link" target="_blank" rel="noreferrer" href="#">View on Facebook <i class="fa-solid fa-arrow-right"></i></a></div>';
     document.body.appendChild(modal);
     const close = () => modal.classList.remove('open');
     modal.querySelector('.lightbox-close').addEventListener('click', close);
@@ -361,7 +392,7 @@
       if (!running) return;
       ctx.clearRect(0, 0, W, H);
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      const rgb = isDark ? '100, 160, 255' : '26, 95, 212';
+      const rgb = isDark ? '74, 144, 255' : '14, 116, 144';
 
       for (let i = 0; i < points.length; i++) {
         const p = points[i];
