@@ -1,7 +1,6 @@
 /* ============================================================
-   Team C.A.R.E — main.js (V4 — performance-guarded)
-   Adds device-tier detection + frame throttling to hero canvas.
-   All other behaviors unchanged.
+   Team C.A.R.E — main.js (V5)
+   All behaviors + Font Awesome icons + performance-guarded hero.
    ============================================================ */
 (function () {
   'use strict';
@@ -91,11 +90,15 @@
   function renderAwards() {
     const el = document.getElementById('awardsList');
     if (!el || !window.CARE || !window.CARE.achievements) return;
-    el.innerHTML = window.CARE.achievements.items.map(a => {
+
+    el.className = 'awards-list';
+    const items = window.CARE.achievements.items;
+
+    el.innerHTML = items.map(a => {
       const eyebrow = (a.badge || '') + ' · ' + (a.year || '');
       const badge = a.date || a.year || '';
       const imgSrc = a.image
-        ? '<img src="' + a.image + '" alt="' + (a.title || '').replace(/"/g, '&quot;') + '" loading="lazy">'
+        ? '<img src="' + a.image + '" alt="' + (a.title || '').replace(/"/g, '&quot;') + '" loading="lazy" decoding="async">'
         : '<div class="care-award-placeholder">' + icon('trophy') + '</div>';
       const descAttr = (a.desc || '').replace(/"/g, '&quot;');
       return (
@@ -105,11 +108,17 @@
             '<div class="care-award-eyebrow">' + eyebrow + '</div>' +
             '<h3>' + (a.title || '') + '</h3>' +
             '<span class="care-award-badge">' + badge + '</span>' +
-            '<div><button class="btn-outline">See details <i class="fa-solid fa-arrow-right"></i></button></div>' +
           '</div>' +
+          '<button class="btn-outline">See details <i class="fa-solid fa-arrow-right"></i></button>' +
         '</article>'
       );
     }).join('');
+
+    /* Update intro count */
+    const intro = document.getElementById('awardsIntro');
+    if (intro && items.length) {
+      intro.textContent = items.length + ' national and international awards earned by Team C.A.R.E — tap "See details" for the full story.';
+    }
   }
 
   function renderTeam() {
@@ -132,23 +141,180 @@
     }).join('');
   }
 
+  /* =========================================================
+     GALLERY — masonry, blur-up, keyboard-nav lightbox
+     ========================================================= */
   function renderGallery() {
     const el = document.getElementById('galleryGrid');
     if (!el || !window.CARE || !window.CARE.gallery) return;
-    el.innerHTML = window.CARE.gallery.photos.map(p => {
-      const cls = 'gallery-item' + (p.size ? ' ' + p.size : '');
-      const inner = p.image
-        ? '<div class="gallery-inner" style="background-image:url(\'' + p.image + '\');background-size:cover;background-position:center"></div>'
-        : '<div class="gallery-inner">' + icon(p.icon, 'users') + '</div>';
+
+    el.innerHTML = window.CARE.gallery.photos.map((item, i) => {
+      const src = typeof item === 'string' ? item : (item.image || '');
+      const cat = typeof item === 'string' ? '' : (item.cat || '');
+      if (!src) return '';
+      const thumb = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="30"><rect width="40" height="30" fill="#e7f4eb"/></svg>'
+      );
       return (
-        '<div class="' + cls + '" data-cat="' + (p.cat || '') + '">' + inner +
-          '<div class="gallery-overlay">' +
-            '<h4>' + (p.title || '') + '</h4>' +
-            '<p>' + (p.subtitle || '') + '</p>' +
-          '</div>' +
+        '<div class="gallery-item" data-cat="' + cat + '" data-index="' + i + '">' +
+          '<img class="gallery-thumb" src="' + thumb + '" alt="" aria-hidden="true">' +
+          '<img class="gallery-img" src="' + src + '" alt="Gallery photo ' + (i + 1) + '" loading="lazy" decoding="async">' +
         '</div>'
       );
     }).join('');
+
+    el.querySelectorAll('.gallery-item').forEach(it => {
+      const img = it.querySelector('.gallery-img');
+      if (!img) return;
+      const mark = () => {
+        img.classList.add('loaded');
+        it.classList.add('ready');
+      };
+      if (img.complete && img.naturalWidth > 0) mark();
+      else img.addEventListener('load', mark, { once: true });
+      img.addEventListener('error', () => it.classList.add('ready'), { once: true });
+    });
+  }
+
+  function initGalleryFilter() {
+    const buttons = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.gallery-item');
+    if (!buttons.length || !items.length) return;
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cat = btn.dataset.cat || (btn.textContent || '').trim().toLowerCase();
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        items.forEach(it => {
+          const itemCat = (it.dataset.cat || '').toLowerCase();
+          const show = (cat === 'all' || itemCat === cat);
+          it.style.transition = 'opacity 0.2s, transform 0.2s';
+          if (show) {
+            it.style.display = '';
+            requestAnimationFrame(() => { it.style.opacity = '1'; });
+          } else {
+            it.style.opacity = '0';
+            setTimeout(() => { it.style.display = 'none'; }, 200);
+          }
+        });
+      });
+    });
+  }
+
+  function initGalleryLightbox() {
+    const items = [...document.querySelectorAll('.gallery-item')];
+    if (!items.length) return;
+
+    const lb = document.createElement('div');
+    lb.className = 'lightbox';
+    lb.innerHTML =
+      '<div class="lightbox-stage">' +
+        '<button class="lightbox-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>' +
+        '<button class="lightbox-prev" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>' +
+        '<button class="lightbox-next" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>' +
+        '<img class="lightbox-img" alt="">' +
+        '<div class="lightbox-counter"></div>' +
+      '</div>';
+    document.body.appendChild(lb);
+
+    const imgEl = lb.querySelector('.lightbox-img');
+    const counter = lb.querySelector('.lightbox-counter');
+
+    function visibleItems() {
+      return items.filter(it => it.style.display !== 'none');
+    }
+
+    let current = 0;
+    let visible = [];
+
+    function preload(i) {
+      const nxt = visible[i];
+      if (!nxt) return;
+      const img = nxt.querySelector('.gallery-img');
+      if (!img || !img.src) return;
+      const pre = new Image();
+      pre.src = img.src;
+    }
+
+    function show(idx) {
+      visible = visibleItems();
+      if (!visible.length) return;
+      current = (idx + visible.length) % visible.length;
+      const img = visible[current].querySelector('.gallery-img');
+      if (!img) return;
+      imgEl.src = img.src;
+      imgEl.alt = img.alt || '';
+      counter.textContent = (current + 1) + ' / ' + visible.length;
+      preload((current + 1) % visible.length);
+      preload((current - 1 + visible.length) % visible.length);
+    }
+
+    function open(it) {
+      visible = visibleItems();
+      const idx = visible.indexOf(it);
+      if (idx === -1) return;
+      show(idx);
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    items.forEach(it => it.addEventListener('click', () => open(it)));
+
+    lb.querySelector('.lightbox-close').addEventListener('click', close);
+    lb.querySelector('.lightbox-prev').addEventListener('click', e => { e.stopPropagation(); show(current - 1); });
+    lb.querySelector('.lightbox-next').addEventListener('click', e => { e.stopPropagation(); show(current + 1); });
+    lb.addEventListener('click', e => { if (e.target === lb) close(); });
+
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') show(current - 1);
+      else if (e.key === 'ArrowRight') show(current + 1);
+    });
+  }
+
+  /* =========================================================
+     AWARDS MODAL
+     ========================================================= */
+  function initAwardModals() {
+    const buttons = document.querySelectorAll('.care-award .btn-outline');
+    if (!buttons.length) return;
+
+    const modal = document.createElement('div');
+    modal.className = 'lightbox';
+    modal.innerHTML =
+      '<div class="care-award-modal">' +
+        '<button class="lightbox-close"><i class="fa-solid fa-xmark"></i></button>' +
+        '<h3></h3>' +
+        '<p></p>' +
+        '<a class="btn-outline aw-link" target="_blank" rel="noreferrer" href="#">View on Facebook <i class="fa-solid fa-arrow-right"></i></a>' +
+      '</div>';
+    document.body.appendChild(modal);
+
+    const close = () => modal.classList.remove('open');
+    modal.querySelector('.lightbox-close').addEventListener('click', close);
+    modal.addEventListener('click', e => { if (e.target === modal) close(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const card = btn.closest('.care-award');
+        if (!card) return;
+        const h3 = card.querySelector('h3');
+        modal.querySelector('h3').textContent = h3 ? h3.textContent : '';
+        modal.querySelector('p').textContent = card.dataset.desc || 'Details coming soon.';
+        modal.querySelector('.aw-link').href = card.dataset.link || '#';
+        modal.classList.add('open');
+      });
+    });
   }
 
   /* =========================================================
@@ -156,7 +322,6 @@
      ========================================================= */
 
   function initTheme() {
-    /* Always start in light mode on every fresh page load */
     document.documentElement.setAttribute('data-theme', 'light');
     localStorage.setItem('care-theme', 'light');
 
@@ -200,7 +365,7 @@
     })();
 
     document.addEventListener('mouseover', e => {
-      const t = e.target.closest('a, button, .card, .project-card, .member-card, .gallery-item, .news-card, .road-card, .filter-btn');
+      const t = e.target.closest('a, button, .card, .project-card, .member-card, .gallery-item, .news-card, .road-card, .filter-btn, .care-award');
       document.body.classList.toggle('cursor-hover', !!t);
     });
   }
@@ -285,73 +450,6 @@
     obs.observe(layout);
   }
 
-  function initGalleryFilter() {
-    const buttons = document.querySelectorAll('.filter-btn');
-    const items = document.querySelectorAll('.gallery-item');
-    if (!buttons.length || !items.length) return;
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const cat = btn.dataset.cat || (btn.textContent || '').trim().toLowerCase();
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        items.forEach(it => {
-          const itemCat = (it.dataset.cat || '').toLowerCase();
-          it.style.display = (cat === 'all' || itemCat === cat) ? '' : 'none';
-        });
-      });
-    });
-  }
-
-  function initGalleryLightbox() {
-    const items = document.querySelectorAll('.gallery-item');
-    if (!items.length) return;
-    const lb = document.createElement('div');
-    lb.className = 'lightbox';
-    lb.innerHTML = '<div class="lightbox-inner"><button class="lightbox-close"><i class="fa-solid fa-xmark"></i></button><span class="lightbox-icon"></span><h3></h3><p></p></div>';
-    document.body.appendChild(lb);
-    const close = () => lb.classList.remove('open');
-    lb.querySelector('.lightbox-close').addEventListener('click', close);
-    lb.addEventListener('click', e => { if (e.target === lb) close(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-    items.forEach(it => {
-      it.addEventListener('click', () => {
-        const overlay = it.querySelector('.gallery-overlay');
-        const title = overlay && overlay.querySelector('h4') ? overlay.querySelector('h4').textContent : '';
-        const subtitle = overlay && overlay.querySelector('p') ? overlay.querySelector('p').textContent : '';
-        const inner = it.querySelector('.gallery-inner');
-        const iconEl = inner ? inner.querySelector('i') : null;
-        const lbIcon = lb.querySelector('.lightbox-icon');
-        lbIcon.innerHTML = iconEl ? '<i class="' + iconEl.className + '"></i>' : '';
-        lb.querySelector('h3').textContent = title;
-        lb.querySelector('p').textContent = subtitle;
-        lb.classList.add('open');
-      });
-    });
-  }
-
-  function initAwardModals() {
-    const buttons = document.querySelectorAll('.care-award .btn-outline');
-    if (!buttons.length) return;
-    const modal = document.createElement('div');
-    modal.className = 'lightbox';
-    modal.innerHTML = '<div class="care-award-modal"><button class="lightbox-close"><i class="fa-solid fa-xmark"></i></button><h3></h3><p></p><a class="btn-outline aw-link" target="_blank" rel="noreferrer" href="#">View on Facebook <i class="fa-solid fa-arrow-right"></i></a></div>';
-    document.body.appendChild(modal);
-    const close = () => modal.classList.remove('open');
-    modal.querySelector('.lightbox-close').addEventListener('click', close);
-    modal.addEventListener('click', e => { if (e.target === modal) close(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const card = btn.closest('.care-award');
-        if (!card) return;
-        modal.querySelector('h3').textContent = card.querySelector('h3') ? card.querySelector('h3').textContent : '';
-        modal.querySelector('p').textContent = card.dataset.desc || 'Details coming soon.';
-        modal.querySelector('.aw-link').href = card.dataset.link || '#';
-        modal.classList.add('open');
-      });
-    });
-  }
-
   function initActiveNav() {
     const path = window.location.pathname.split('/').pop() || 'index.html';
     document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(a => {
@@ -363,17 +461,13 @@
 
   /* =========================================================
      HERO CANVAS — performance-guarded
-     - Skips on very low-end devices (≤2 cores)
-     - Runs at reduced cost on low-tier devices (≤4 cores)
-     - Frame-throttled to ~30fps (20fps on low-tier)
-     - Already skips on touch, reduced motion, hidden tab, off-screen hero
      ========================================================= */
   function initHeroCanvas() {
     if (prefersReducedMotion || isTouchDevice) return;
 
     const cores = navigator.hardwareConcurrency || 4;
-    if (cores <= 2) return;                 // very weak: skip entirely
-    const lowTier = cores <= 4;             // 4 cores or fewer: reduced cost
+    if (cores <= 2) return;
+    const lowTier = cores <= 4;
 
     const canvas = document.getElementById('heroBgCanvas');
     if (!canvas) return;
@@ -384,7 +478,7 @@
     let rafId = 0;
     let running = false;
     let lastFrame = 0;
-    const FRAME_MS = lowTier ? 50 : 33;     // ~20fps or ~30fps
+    const FRAME_MS = lowTier ? 50 : 33;
 
     function setup() {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -492,13 +586,3 @@
     initGalleryFilter();
     initGalleryLightbox();
     initAwardModals();
-    initActiveNav();
-    initHeroCanvas();
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot);
-  } else {
-    boot();
-  }
-})();
