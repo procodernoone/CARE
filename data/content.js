@@ -1,13 +1,13 @@
 /* ============================================================
-   Team C.A.R.E — content.js (V12)
-   13 achievements (no 9.jpg, no 15–17).
-   Gallery aggregates every image on the site.
+   Team C.A.R.E — content.js (V14)
+   Team: 9 photos across 3 sections (Team Lead / Advisors / Tech).
+   No captions — images only, full aspect ratio preserved.
    ============================================================ */
 window.CARE = {
 
   site: {
     stat_awards: "13",       stat_awards_plus: true,
-    stat_members: "3",       stat_members_plus: false,
+    stat_members: "9",       stat_members_plus: false,
     stat_projects: "3",      stat_projects_plus: true,
     stat_years: "2",         stat_years_plus: true,
     contact_email: "teamcareofficial25@gmail.com",
@@ -16,18 +16,39 @@ window.CARE = {
   },
 
   team: {
-    members: [
-      { name: "Team Lead",      role: "Founder & Lead",    photo: "", linkedin: "", facebook: "" },
-      { name: "Research Head",  role: "R&D Division",      photo: "", linkedin: "", facebook: "" },
-      { name: "Software Lead",  role: "AI / ML Engineer",  photo: "", linkedin: "", facebook: "" },
-      { name: "Hardware Lead",  role: "Electronics & IoT", photo: "", linkedin: "", facebook: "" },
-      { name: "Design Lead",    role: "UX / Mechanical",   photo: "", linkedin: "", facebook: "" }
+    sections: [
+      {
+        title: "Team Lead",
+        eyebrow: "Leadership",
+        photos: [
+          "./images/team/1.jpg",
+          "./images/team/2.jpg",
+          "./images/team/3.jpg"
+        ]
+      },
+      {
+        title: "Advisors",
+        eyebrow: "Guidance",
+        photos: [
+          "./images/team/4.jpg",
+          "./images/team/5.jpg",
+          "./images/team/6.jpg"
+        ]
+      },
+      {
+        title: "Tech Members",
+        eyebrow: "Engineering",
+        photos: [
+          "./images/team/7.jpg",
+          "./images/team/8.jpg",
+          "./images/team/9.jpg"
+        ]
+      }
     ]
   },
 
   gallery: {
     photos: [
-      /* ---- Awards (13 images) ---- */
       { image: "./images/awards/1.jpg",  cat: "awards" },
       { image: "./images/awards/2.jpg",  cat: "awards" },
       { image: "./images/awards/3.jpg",  cat: "awards" },
@@ -41,8 +62,6 @@ window.CARE = {
       { image: "./images/awards/12.jpg", cat: "awards" },
       { image: "./images/awards/13.jpg", cat: "awards" },
       { image: "./images/awards/14.jpg", cat: "awards" },
-
-      /* ---- Roadmap (1 image) ---- */
       { image: "./images/roadmap/2.jpg", cat: "lab" }
     ]
   },
@@ -79,63 +98,48 @@ window.CARE = {
       { kind: "milestone", date: "MAY 2025", title: "C.A.R.E WHEELCHAIR V1", status: "done",
         desc: "The first functional prototype — hand gesture control, basic IoT integration, and smart mobility assistance.",
         media: { type: "video", src: "./videos/1.mp4" } },
-
       { kind: "milestone", date: "NOVEMBER 2025", title: "C.A.R.E WHEELCHAIR V2", status: "done",
         desc: "Redesigned chassis with head gesture control, improved responsiveness, and enhanced safety systems.",
         media: { type: "image", src: "./images/roadmap/2.jpg" } },
-
       { kind: "milestone", date: "AUGUST 2026", title: "C.A.R.E WHEELCHAIR V3", status: "done",
         desc: "AI-powered obstacle detection, voice interaction, smart navigation, live monitoring, and IoT dashboard.",
         media: { type: "video", src: "./videos/3.mp4" } },
-
       { kind: "achievement", date: "SEPTEMBER 2026", title: "WORLD ROBOT GAMES (WRG) BANGLADESH 2026", status: "done",
         desc: "Gold Medalist (National Champion) — Robo Innovator (Senior). Organized by Tech Autocrats.",
         media: { type: "image", src: "./images/awards/1.jpg" } },
-
       { kind: "achievement", date: "AUGUST 2026", title: "WORLD ROBOT OLYMPIAD (WRO) BANGLADESH 2026", status: "done",
         desc: "Gold Medalist (National Champion) — Future Innovators (Senior). Organized by BdOSN & WRO Bangladesh.",
         media: { type: "image", src: "./images/awards/2.jpg" } },
-
       { kind: "achievement", date: "MAY 2026", title: "FIBONACCI ROBOT OLYMPIAD NATIONAL 2026", status: "done",
         desc: "Gold Medalist (National Champion) — Health Tech Category.",
         media: { type: "image", src: "./images/awards/3.jpg" } },
-
       { kind: "achievement", date: "MAY 2026", title: "GLOBAL ROBOTICS AND INNOVATION CHAMPIONSHIP (GRIC) 2026", status: "done",
         desc: "Honorable Mention — Robotics and IoT. Organized by Tech Autocrats.",
         media: { type: "image", src: "./images/awards/5.jpg" } },
-
       { kind: "achievement", date: "MAY 2026", title: "WORLD INVENTION COMPETITION AND EXHIBITION (WICE) NATIONAL 2026", status: "done",
         desc: "Silver Medalist — Health Tech. Organized by IYSA & National Partners.",
         media: { type: "image", src: "./images/awards/6.jpg" } },
-
       { kind: "achievement", date: "FEBRUARY 2026", title: "16TH DRMC INTERNATIONAL SCIENCE CARNIVAL 2026", status: "done",
         desc: "Champion (National Champion) — Mechanical & Hardware Project Display.",
         media: { type: "image", src: "./images/awards/7.jpg" } },
-
       { kind: "achievement", date: "DECEMBER 2025", title: "17TH APICTA AWARDS 2025 — KAOHSIUNG, TAIWAN", status: "done",
         desc: "Top 6 International Finalist (6th Position) — Inclusion and Community Services.",
         media: { type: "image", src: "./images/awards/4.jpg" } },
-
       { kind: "achievement", date: "OCTOBER 2025", title: "BANGLADESH ICT AND INNOVATION AWARDS 2025", status: "done",
         desc: "Champion — Inclusion and Community Services.",
         media: { type: "image", src: "./images/awards/8.jpg" } },
-
       { kind: "achievement", date: "JUNE 2025", title: "46TH NATIONAL SCIENCE AND TECHNOLOGY WEEK (NATIONAL ROUND) 2025", status: "done",
         desc: "Special 3rd Position — Senior Project Display (National Level).",
         media: { type: "image", src: "./images/awards/10.jpg" } },
-
       { kind: "achievement", date: "MAY 2025", title: "46TH NATIONAL SCIENCE AND TECHNOLOGY WEEK (DISTRICT ROUND) 2025", status: "done",
         desc: "District Champion — Senior Science Project Display.",
         media: { type: "image", src: "./images/awards/11.jpg" } },
-
       { kind: "achievement", date: "APRIL 2025", title: "TECHNOVATION 2025", status: "done",
         desc: "Champion — Hardware & Assistive Tech Project Exhibition.",
         media: { type: "image", src: "./images/awards/12.jpg" } },
-
       { kind: "achievement", date: "FEBRUARY 2025", title: "DRMC TECH INTERNATIONAL FEST 2025", status: "done",
         desc: "1st Runner-Up — Tech Project Display (Senior Division).",
         media: { type: "image", src: "./images/awards/13.jpg" } },
-
       { kind: "achievement", date: "JANUARY 2025", title: "DRMC MATH FEST 2025", status: "done",
         desc: "1st Runner-Up — Applied Math & Engineering Innovation.",
         media: { type: "image", src: "./images/awards/14.jpg" } }
