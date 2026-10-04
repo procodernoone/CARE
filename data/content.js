@@ -1,12 +1,12 @@
 /* ============================================================
-   Team C.A.R.E — content.js (V9)
-   Roadmap: prototype milestones + full achievement timeline.
-   Videos use their own first frame as thumbnail (no poster file).
+   Team C.A.R.E — content.js (V10)
+   13 achievements (no 9.jpg, no 15–17).
+   Roadmap includes prototype milestones + timeline of achievements.
    ============================================================ */
 window.CARE = {
 
   site: {
-    stat_awards: "14",       stat_awards_plus: true,
+    stat_awards: "13",       stat_awards_plus: true,
     stat_members: "3",       stat_members_plus: false,
     stat_projects: "3",      stat_projects_plus: true,
     stat_years: "2",         stat_years_plus: true,
@@ -53,7 +53,6 @@ window.CARE = {
       { image: "./images/awards/6.jpg",  title: "World Invention Competition and Exhibition (WICE) National 2026", desc: "Silver Medalist in the Health Tech category at the World Invention Competition and Exhibition National 2026, organized by IYSA & National Partners.", year: "2026", date: "May 2026", badge: "International", link: "https://www.facebook.com/teamcare.bd" },
       { image: "./images/awards/7.jpg",  title: "16th DRMC International Science Carnival 2026", desc: "Champion (National Champion) in the Mechanical & Hardware Project Display category at the 16th DRMC International Science Carnival 2026, organized by DRMC & DRMC Science Club.", year: "2026", date: "February 6–8, 2026", badge: "National", link: "https://www.facebook.com/teamcare.bd" },
       { image: "./images/awards/8.jpg",  title: "Bangladesh ICT and Innovation Awards 2025", desc: "Champion in the Inclusion and Community Services category at the Bangladesh ICT and Innovation Awards 2025, organized by Bangladesh ICT and Innovation Network & ICT Division.", year: "2025", date: "October 2025", badge: "National", link: "https://www.facebook.com/teamcare.bd" },
-      { image: "./images/awards/9.jpg",  title: "Startup Bangladesh Science Project Competition 2026", desc: "Top 4 Innovator in the Social Impact & Scientific Innovation category at the Startup Bangladesh Science Project Competition 2026. Received prize from the Honorable Prime Minister. Organized by Startup Bangladesh Limited & ICT Division.", year: "2026", date: "June 2026", badge: "National", link: "https://www.facebook.com/teamcare.bd" },
       { image: "./images/awards/10.jpg", title: "46th National Science and Technology Week (National Round) 2025", desc: "Special 3rd Position in the Senior Project Display (National Level) category at the 46th National Science and Technology Week 2025, organized by NMST & Ministry of Science and Technology.", year: "2025", date: "June 2025", badge: "National", link: "https://www.facebook.com/teamcare.bd" },
       { image: "./images/awards/11.jpg", title: "46th National Science and Technology Week (District Round) 2025", desc: "District Champion in the Senior Science Project Display category at the 46th National Science and Technology Week 2025 (District Round), organized by District Administration & NMST.", year: "2025", date: "May 2025", badge: "National", link: "https://www.facebook.com/teamcare.bd" },
       { image: "./images/awards/12.jpg", title: "Technovation 2025", desc: "Champion in the Hardware & Assistive Tech Project Exhibition category at Technovation 2025, organized by Saint Joseph Higher Secondary School, Dhaka.", year: "2025", date: "April 2025", badge: "National", link: "https://www.facebook.com/teamcare.bd" },
@@ -83,10 +82,6 @@ window.CARE = {
       { kind: "achievement", date: "AUGUST 2026", title: "WORLD ROBOT OLYMPIAD (WRO) BANGLADESH 2026", status: "done",
         desc: "Gold Medalist (National Champion) — Future Innovators (Senior). Organized by BdOSN & WRO Bangladesh.",
         media: { type: "image", src: "./images/awards/2.jpg" } },
-
-      { kind: "achievement", date: "JUNE 2026", title: "STARTUP BANGLADESH SCIENCE PROJECT COMPETITION 2026", status: "done",
-        desc: "Top 4 Innovator — Social Impact & Scientific Innovation. Prize received from the Honorable Prime Minister.",
-        media: { type: "image", src: "./images/awards/9.jpg" } },
 
       { kind: "achievement", date: "MAY 2026", title: "FIBONACCI ROBOT OLYMPIAD NATIONAL 2026", status: "done",
         desc: "Gold Medalist (National Champion) — Health Tech Category.",
