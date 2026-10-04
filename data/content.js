@@ -1,11 +1,11 @@
 /* ============================================================
-   Team C.A.R.E — content.js (V3 — Font Awesome icon names)
+   Team C.A.R.E — content.js (V5 — 17 achievements)
    Icon names map to Font Awesome classes in js/main.js.
    ============================================================ */
 window.CARE = {
 
   site: {
-    stat_awards: "20",       stat_awards_plus: true,
+    stat_awards: "17",       stat_awards_plus: true,
     stat_members: "3",       stat_members_plus: false,
     stat_projects: "3",      stat_projects_plus: true,
     stat_years: "2",         stat_years_plus: true,
@@ -26,14 +26,10 @@ window.CARE = {
 
   gallery: {
     photos: [
-      { image: "", icon: "users",  cat: "team",   size: "wide", title: "Team Photo",           subtitle: "ROBOFEST 2024",       desc: "Our full team after winning the 1st place trophy at the national ROBOFEST 2024 competition." },
-      { image: "", icon: "wrench", cat: "lab",    size: "",     title: "Lab Session",          subtitle: "Wheelchair Build",    desc: "Engineers working on the CARE Wheelchair v2.0 chassis and electronics in our campus lab." },
-      { image: "", icon: "trophy", cat: "awards", size: "tall", title: "Award Ceremony",       subtitle: "ROBOFEST 2024",       desc: "Team CARE receives the national 1st place trophy at ROBOFEST 2024." },
-      { image: "", icon: "globe",  cat: "events", size: "",     title: "Asian Robotics Forum", subtitle: "International Event", desc: "Our team representing Bangladesh at the Asian Robotics Forum 2024." },
-      { image: "", icon: "laptop", cat: "lab",    size: "",     title: "AI Development",       subtitle: "Software Lab",        desc: "Programming and testing the AI obstacle detection module for CARE Wheelchair v2.0." },
-      { image: "", icon: "tv",     cat: "events", size: "",     title: "TV Feature",           subtitle: "National Coverage",   desc: "Team CARE featured on national television showcasing our CARE Wheelchair innovation." },
-      { image: "", icon: "wheel",  cat: "events", size: "wide", title: "Wheelchair Demo Day",  subtitle: "Innovation Expo",     desc: "Live demonstration of CARE Wheelchair v2.0 at the national innovation expo." },
-      { image: "", icon: "cap",    cat: "team",   size: "",     title: "IEEE Conference",      subtitle: "Research Paper",      desc: "Team members presenting research findings at the IEEE Student Conference 2023." }
+      { image: "./images/gallery/photo-1.jpg", cat: "team" },
+      { image: "./images/gallery/photo-2.jpg", cat: "lab" },
+      { image: "./images/gallery/photo-3.jpg", cat: "awards" },
+      { image: "./images/gallery/photo-4.jpg", cat: "events" }
     ]
   },
 
@@ -48,13 +44,98 @@ window.CARE = {
 
   achievements: {
     items: [
-      { title: "APICTA Awards 2025",                desc: "Winner at the Asia Pacific ICT Alliance Awards 2025 in Kaohsiung, Taiwan, bringing glory to Bangladesh.",             year: "2025",      date: "Dec 2025", badge: "International", link: "https://www.facebook.com/teamcare.bd" },
-      { title: "Bangladesh ICT & Innovation Award", desc: "Champion among 250+ projects nationwide at the Bangladesh ICT and Innovation Award 2025.",                              year: "2025",      date: "Oct 2025", badge: "National",      link: "https://www.facebook.com/teamcare.bd" },
-      { title: "WICE Silver Medal (Malaysia)",      desc: "Silver Medalist at the World Innovation Competition and Exhibition (WICE) among 1000+ global participants.",           year: "2026",      date: "2026",     badge: "International", link: "https://www.facebook.com/teamcare.bd" },
-      { title: "GRIC Special Mention (Turkey)",     desc: "Earned Special Mention at the Global Robotics and Innovation Consortium (GRIC) among 350+ projects in Istanbul.",      year: "2026",      date: "2026",     badge: "International", link: "https://www.facebook.com/teamcare.bd" },
-      { title: "National Science & Tech Fests",     desc: "\"Special 3rd Position\" (46th Fest) and Runner-Up Senior Group (47th Fest), alongside multiple district champion titles.", year: "2025–2026", date: "",         badge: "National",      link: "https://www.facebook.com/teamcare.bd" },
-      { title: "16th DRMC Science Carnival",        desc: "Crowned Champion at the prestigious 16th DRMC Science Carnival 2025 organized by the DRMC Science Club.",              year: "2025",      date: "May 2025", badge: "National",      link: "https://www.facebook.com/teamcare.bd" },
-      { title: "National Champion — Robo Display",  desc: "National Champion on Robo Display in TECHNOVATION-25 for outstanding innovation and presentation.",                     year: "2025",      date: "",         badge: "National",      link: "https://www.facebook.com/teamcare.bd" }
+      {
+        image: "./images/awards/1.jpg",
+        title: "World Robot Games (WRG) Bangladesh 2026",
+        desc: "Gold Medalist (National Champion) in the Robo Innovator (Senior) category at World Robot Games Bangladesh 2026, organized by Tech Autocrats.",
+        year: "2026", date: "September 2026", badge: "National",
+        link: "https://www.facebook.com/teamcare.bd"
+      },
+      {
+        image: "./images/awards/2.jpg",
+        title: "World Robot Olympiad (WRO) Bangladesh 2026",
+        desc: "Gold Medalist (National Champion) in the Future Innovators (Senior) category at the World Robot Olympiad Bangladesh 2026, organized by BdOSN & WRO Bangladesh.",
+        year: "2026", date: "August 2026", badge: "National",
+        link: "https://www.facebook.com/teamcare.bd"
+      },
+      {
+        image: "./images/awards/3.jpg",
+        title: "Fibonacci Robot Olympiad National 2026",
+        desc: "Gold Medalist (National Champion) in the Health Tech category at Fibonacci Robot Olympiad National 2026, organized by Fibonacci Robot Olympiad Committee & STEM Education Partners.",
+        year: "2026", date: "May 2026", badge: "National",
+        link: "https://www.facebook.com/teamcare.bd"
+      },
+      {
+        image: "./images/awards/4.jpg",
+        title: "17th Asia Pacific ICT Alliance (APICTA) Awards 2025",
+        desc: "Top 6 International Finalist (6th Position) in Inclusion and Community Services / Student Category at the 17th APICTA Awards 2025, held in Kaohsiung, Taiwan. Organized by APICTA & Ministry of Digital Affairs, Taiwan.",
+        year: "2025", date: "December 5–8, 2025", badge: "International",
+        link: "https://www.facebook.com/teamcare.bd"
+      },
+      {
+        image: "./images/awards/5.jpg",
+        title: "Global Robotics and Innovation Championship (GRIC) Bangladesh 2026",
+        desc: "Honorable Mention in the Robotics and IoT category at the Global Robotics and Innovation Championship Bangladesh 2026, organized by Tech Autocrats.",
+        year: "2026", date: "May 2026", badge: "National",
+        link: "https://www.facebook.com/teamcare.bd"
+      },
+      {
+        image: "./images/awards/6.jpg",
+        title: "World Invention Competition and Exhibition (WICE) National 2026",
+        desc: "Silver Medalist in the Health Tech category at the World Invention Competition and Exhibition National 2026, organized by IYSA & National Partners.",
+        year: "2026", date: "May 2026", badge: "International",
+        link: "https://www.facebook.com/teamcare.bd"
+      },
+      {
+        image: "./images/awards/7.jpg",
+        title: "16th DRMC International Science Carnival 2026",
+        desc: "Champion (National Champion) in the Mechanical & Hardware Project Display category at the 16th DRMC International Science Carnival 2026, organized by DRMC & DRMC Science Club.",
+        year: "2026", date: "February 6–8, 2026", badge: "National",
+        link: "https://www.facebook.com/teamcare.bd"
+      },
+      {
+        image: "./images/awards/8.jpg",
+        title: "Bangladesh ICT and Innovation Awards 2025",
+        desc: "Champion in the Inclusion and Community Services category at the Bangladesh ICT and Innovation Awards 2025, organized by Bangladesh ICT and Innovation Network & ICT Division.",
+        year: "2025", date: "October 2025", badge: "National",
+        link: "https://www.facebook.com/teamcare.bd"
+      },
+      
+      {
+        image: "./images/awards/10.jpg",
+        title: "46th National Science and Technology Week (National Round) 2025",
+        desc: "Special 3rd Position in the Senior Project Display (National Level) category at the 46th National Science and Technology Week 2025, organized by NMST & Ministry of Science and Technology.",
+        year: "2025", date: "June 2025", badge: "National",
+        link: "https://www.facebook.com/teamcare.bd"
+      },
+      {
+        image: "./images/awards/11.jpg",
+        title: "46th National Science and Technology Week (District Round) 2025",
+        desc: "District Champion in the Senior Science Project Display category at the 46th National Science and Technology Week 2025 (District Round), organized by District Administration & NMST.",
+        year: "2025", date: "May 2025", badge: "National",
+        link: "https://www.facebook.com/teamcare.bd"
+      },
+      {
+        image: "./images/awards/12.jpg",
+        title: "Technovation 2025",
+        desc: "Champion in the Hardware & Assistive Tech Project Exhibition category at Technovation 2025, organized by Saint Joseph Higher Secondary School, Dhaka.",
+        year: "2025", date: "April 2025", badge: "National",
+        link: "https://www.facebook.com/teamcare.bd"
+      },
+      {
+        image: "./images/awards/13.jpg",
+        title: "DRMC Tech International Fest 2025",
+        desc: "1st Runner-Up in the Tech Project Display (Senior Division) category at DRMC Tech International Fest 2025, organized by DRMC IT Club.",
+        year: "2025", date: "February 2025", badge: "National",
+        link: "https://www.facebook.com/teamcare.bd"
+      },
+      {
+        image: "./images/awards/14.jpg",
+        title: "DRMC Math Fest 2025",
+        desc: "1st Runner-Up in the Applied Math & Engineering Innovation category at DRMC Math Fest 2025, organized by DRMC Math Club.",
+        year: "2025", date: "January 2025", badge: "National",
+        link: "https://www.facebook.com/teamcare.bd"
+      },
     ]
   }
 
