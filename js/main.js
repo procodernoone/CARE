@@ -1,7 +1,7 @@
 /* ============================================================
-   Team C.A.R.E — main.js (V9)
-   Font Awesome icons · awards scroll-stack · roadmap timeline
-   Auto-thumbnail from video's own first frame (no poster file).
+   Team C.A.R.E — main.js (V10)
+   Font Awesome icons · awards scroll-stack · roadmap media
+   Team: image-only sections, no captions.
    ============================================================ */
 (function () {
   'use strict';
@@ -122,21 +122,24 @@
   }
 
   function renderTeam() {
-    const el = document.getElementById('teamGrid');
+    const el = document.getElementById('teamSections');
     if (!el || !window.CARE || !window.CARE.team) return;
-    el.innerHTML = window.CARE.team.members.map(m => {
-      const avatar = m.photo
-        ? '<div class="member-avatar" style="background-image:url(\'' + m.photo + '\');background-size:cover;background-position:center"></div>'
-        : '<div class="member-avatar">' + icon('user') + '</div>';
-      const socials = [];
-      if (m.linkedin) socials.push('<a href="' + m.linkedin + '" target="_blank" rel="noreferrer"><i class="fa-brands fa-linkedin-in"></i></a>');
-      if (m.facebook) socials.push('<a href="' + m.facebook + '" target="_blank" rel="noreferrer"><i class="fa-brands fa-facebook-f"></i></a>');
-      return (
-        '<div class="member-card fade-up">' + avatar +
-          '<h4>' + (m.name || '') + '</h4>' +
-          '<p class="role">' + (m.role || '') + '</p>' +
-          '<div class="member-socials">' + socials.join('') + '</div>' +
+
+    el.innerHTML = window.CARE.team.sections.map(section => {
+      const photos = (section.photos || []).map(src =>
+        '<div class="team-photo">' +
+          '<img src="' + src + '" alt="" loading="lazy" decoding="async">' +
         '</div>'
+      ).join('');
+
+      return (
+        '<section class="team-section fade-up">' +
+          '<div class="team-section-head">' +
+            '<div class="section-eyebrow">' + (section.eyebrow || '') + '</div>' +
+            '<h2 class="team-section-title">' + (section.title || '') + '</h2>' +
+          '</div>' +
+          '<div class="team-photo-grid">' + photos + '</div>' +
+        '</section>'
       );
     }).join('');
   }
@@ -173,9 +176,6 @@
     });
   }
 
-  /* =========================================================
-     ROADMAP — renders timeline, videos use own first frame as thumb
-     ========================================================= */
   function renderRoadmap() {
     const el = document.getElementById('roadmapTrack');
     if (!el || !window.CARE || !window.CARE.roadmap) return;
@@ -237,9 +237,7 @@
     const videos = [...document.querySelectorAll('.road-video')];
     if (!videos.length) return;
 
-    /* Auto-thumbnail: use the video's own first frame as poster */
     videos.forEach(v => {
-      /* If an explicit poster attribute is present, respect it */
       if (v.hasAttribute('poster') && v.getAttribute('poster')) return;
 
       const makeThumb = () => {
@@ -259,7 +257,6 @@
       else v.addEventListener('loadeddata', makeThumb, { once: true });
     });
 
-    /* Only one plays at a time */
     videos.forEach(v => {
       v.addEventListener('play', () => {
         videos.forEach(other => {
@@ -272,7 +269,6 @@
       });
     });
 
-    /* Pause when scrolled out of view */
     if ('IntersectionObserver' in window) {
       const obs = new IntersectionObserver(entries => {
         entries.forEach(entry => {
@@ -285,7 +281,6 @@
       videos.forEach(v => obs.observe(v));
     }
 
-    /* Click on overlay → play from start, unmuted */
     document.querySelectorAll('.road-media .video-overlay').forEach(overlay => {
       overlay.addEventListener('click', () => {
         const v = overlay.parentElement.querySelector('video');
@@ -297,9 +292,6 @@
     });
   }
 
-  /* =========================================================
-     AWARDS SCROLL
-     ========================================================= */
   function initAwardsScroll() {
     const cards = document.querySelectorAll('.care-award');
     if (!cards.length) return;
@@ -343,9 +335,6 @@
     onScroll();
   }
 
-  /* =========================================================
-     GALLERY FILTER + LIGHTBOX
-     ========================================================= */
   function initGalleryFilter() {
     const buttons = document.querySelectorAll('.filter-btn');
     const items = document.querySelectorAll('.gallery-item');
@@ -450,9 +439,6 @@
     });
   }
 
-  /* =========================================================
-     AWARD MODAL
-     ========================================================= */
   function initAwardModals() {
     const buttons = document.querySelectorAll('.care-award .btn-outline');
     if (!buttons.length) return;
@@ -486,10 +472,6 @@
       });
     });
   }
-
-  /* =========================================================
-     INTERACTIONS
-     ========================================================= */
 
   function initTheme() {
     document.documentElement.setAttribute('data-theme', 'light');
@@ -535,7 +517,7 @@
     })();
 
     document.addEventListener('mouseover', e => {
-      const t = e.target.closest('a, button, .card, .project-card, .member-card, .gallery-item, .news-card, .road-card, .filter-btn, .care-award, .road-media');
+      const t = e.target.closest('a, button, .card, .project-card, .team-photo, .gallery-item, .news-card, .road-card, .filter-btn, .care-award, .road-media');
       document.body.classList.toggle('cursor-hover', !!t);
     });
   }
@@ -629,9 +611,6 @@
     });
   }
 
-  /* =========================================================
-     HERO CANVAS
-     ========================================================= */
   function initHeroCanvas() {
     if (prefersReducedMotion || isTouchDevice) return;
 
@@ -735,9 +714,6 @@
     }
   }
 
-  /* =========================================================
-     BOOT
-     ========================================================= */
   function boot() {
     renderSite();
     renderHomeNews();
