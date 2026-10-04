@@ -1,7 +1,7 @@
 /* ============================================================
-   Team C.A.R.E — content.js (V10)
+   Team C.A.R.E — content.js (V12)
    13 achievements (no 9.jpg, no 15–17).
-   Roadmap includes prototype milestones + timeline of achievements.
+   Gallery aggregates every image on the site.
    ============================================================ */
 window.CARE = {
 
@@ -27,10 +27,23 @@ window.CARE = {
 
   gallery: {
     photos: [
-      { image: "./images/gallery/photo-1.jpg", cat: "team" },
-      { image: "./images/gallery/photo-2.jpg", cat: "lab" },
-      { image: "./images/gallery/photo-3.jpg", cat: "awards" },
-      { image: "./images/gallery/photo-4.jpg", cat: "events" }
+      /* ---- Awards (13 images) ---- */
+      { image: "./images/awards/1.jpg",  cat: "awards" },
+      { image: "./images/awards/2.jpg",  cat: "awards" },
+      { image: "./images/awards/3.jpg",  cat: "awards" },
+      { image: "./images/awards/4.jpg",  cat: "awards" },
+      { image: "./images/awards/5.jpg",  cat: "awards" },
+      { image: "./images/awards/6.jpg",  cat: "awards" },
+      { image: "./images/awards/7.jpg",  cat: "awards" },
+      { image: "./images/awards/8.jpg",  cat: "awards" },
+      { image: "./images/awards/10.jpg", cat: "awards" },
+      { image: "./images/awards/11.jpg", cat: "awards" },
+      { image: "./images/awards/12.jpg", cat: "awards" },
+      { image: "./images/awards/13.jpg", cat: "awards" },
+      { image: "./images/awards/14.jpg", cat: "awards" },
+
+      /* ---- Roadmap (1 image) ---- */
+      { image: "./images/roadmap/2.jpg", cat: "lab" }
     ]
   },
 
