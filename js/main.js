@@ -1,6 +1,7 @@
 /* ============================================================
-   Team C.A.R.E — main.js (V6)
-   Font Awesome icons, awards scroll-stack, performance-guarded hero.
+   Team C.A.R.E — main.js (V9)
+   Font Awesome icons · awards scroll-stack · roadmap timeline
+   Auto-thumbnail from video's own first frame (no poster file).
    ============================================================ */
 (function () {
   'use strict';
@@ -173,7 +174,131 @@
   }
 
   /* =========================================================
-     AWARDS SCROLL — intense stack fade
+     ROADMAP — renders timeline, videos use own first frame as thumb
+     ========================================================= */
+  function renderRoadmap() {
+    const el = document.getElementById('roadmapTrack');
+    if (!el || !window.CARE || !window.CARE.roadmap) return;
+
+    const items = window.CARE.roadmap.items;
+
+    el.innerHTML = items.map((item, i) => {
+      const isMilestone = item.kind === 'milestone';
+      const sideClass = (i % 2 === 0) ? 'road-left' : 'road-right';
+      const kindClass = isMilestone ? 'road-milestone' : 'road-achievement';
+
+      let mediaHTML = '';
+      if (item.media) {
+        if (item.media.type === 'video') {
+          const posterAttr = (item.media.poster && item.media.poster.trim())
+            ? ' poster="' + item.media.poster + '"'
+            : '';
+          mediaHTML =
+            '<div class="road-media">' +
+              '<video class="road-video" muted playsinline preload="metadata" controls' + posterAttr + '>' +
+                '<source src="' + item.media.src + '" type="video/mp4">' +
+              '</video>' +
+              '<div class="video-overlay"><div class="play-icon"><i class="fa-solid fa-play"></i></div></div>' +
+            '</div>';
+        } else if (item.media.type === 'image') {
+          mediaHTML =
+            '<div class="road-media">' +
+              '<img class="road-image" src="' + item.media.src + '" alt="' + (item.title || '').replace(/"/g, '&quot;') + '" loading="lazy" decoding="async">' +
+            '</div>';
+        }
+      }
+
+      const dotClass = item.status === 'active' ? 'active' : (item.status === 'vision' ? 'future' : 'done');
+
+      return (
+        '<div class="roadmap-item ' + sideClass + ' ' + kindClass + ' fade-up">' +
+          '<div class="road-dot-wrap"><div class="road-dot ' + dotClass + '"></div></div>' +
+          '<div class="road-content">' +
+            '<div class="road-card">' +
+              '<div class="road-year">' + (item.date || '') + '</div>' +
+              '<h3 class="road-letter-title">' + (item.title || '') + '</h3>' +
+              '<p>' + (item.desc || '') + '</p>' +
+              mediaHTML +
+              '<div class="road-status-row">' +
+                '<span class="road-status status-done">' +
+                  (isMilestone ? '✓ Milestone' : '★ Achievement') +
+                '</span>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join('');
+
+    initRoadmapVideos();
+  }
+
+  function initRoadmapVideos() {
+    const videos = [...document.querySelectorAll('.road-video')];
+    if (!videos.length) return;
+
+    /* Auto-thumbnail: use the video's own first frame as poster */
+    videos.forEach(v => {
+      /* If an explicit poster attribute is present, respect it */
+      if (v.hasAttribute('poster') && v.getAttribute('poster')) return;
+
+      const makeThumb = () => {
+        try {
+          if (v.duration && v.duration > 0.3) v.currentTime = 0.1;
+        } catch (e) { /* ignore */ }
+
+        const onSeeked = () => {
+          try { v.pause(); } catch (e) {}
+          v.classList.add('has-thumb');
+          v.removeEventListener('seeked', onSeeked);
+        };
+        v.addEventListener('seeked', onSeeked, { once: true });
+      };
+
+      if (v.readyState >= 2) makeThumb();
+      else v.addEventListener('loadeddata', makeThumb, { once: true });
+    });
+
+    /* Only one plays at a time */
+    videos.forEach(v => {
+      v.addEventListener('play', () => {
+        videos.forEach(other => {
+          if (other !== v && !other.paused) other.pause();
+        });
+        v.classList.add('is-playing');
+      });
+      v.addEventListener('pause', () => {
+        v.classList.remove('is-playing');
+      });
+    });
+
+    /* Pause when scrolled out of view */
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) {
+            const v = entry.target;
+            if (!v.paused) v.pause();
+          }
+        });
+      }, { threshold: 0.25 });
+      videos.forEach(v => obs.observe(v));
+    }
+
+    /* Click on overlay → play from start, unmuted */
+    document.querySelectorAll('.road-media .video-overlay').forEach(overlay => {
+      overlay.addEventListener('click', () => {
+        const v = overlay.parentElement.querySelector('video');
+        if (!v) return;
+        v.currentTime = 0;
+        v.muted = false;
+        v.play().catch(() => {});
+      });
+    });
+  }
+
+  /* =========================================================
+     AWARDS SCROLL
      ========================================================= */
   function initAwardsScroll() {
     const cards = document.querySelectorAll('.care-award');
@@ -410,7 +535,7 @@
     })();
 
     document.addEventListener('mouseover', e => {
-      const t = e.target.closest('a, button, .card, .project-card, .member-card, .gallery-item, .news-card, .road-card, .filter-btn, .care-award');
+      const t = e.target.closest('a, button, .card, .project-card, .member-card, .gallery-item, .news-card, .road-card, .filter-btn, .care-award, .road-media');
       document.body.classList.toggle('cursor-hover', !!t);
     });
   }
@@ -620,6 +745,7 @@
     renderAwards();
     renderTeam();
     renderGallery();
+    renderRoadmap();
 
     initTheme();
     initMobileMenu();
