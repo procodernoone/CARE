@@ -1,5 +1,5 @@
 /* ============================================================
-   Team C.A.R.E — style.css (V9)
+   Team C.A.R.E — style.css (V14)
    Light green default, dark cyan optional.
    Font Awesome icons · awards scroll-stack · roadmap media
    with auto-thumbnail video + overlay play button.
@@ -995,72 +995,70 @@ section { padding: 88px 60px; }
 }
 
 /* ============================================================
-   TEAM
+   TEAM — sections with full-aspect photo grids (no captions)
    ============================================================ */
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+.team-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
   max-width: 1100px;
   margin: 0 auto;
 }
-.member-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: 24px 16px;
-  text-align: center;
-  box-shadow: var(--shadow-sm);
-  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+
+.team-section {
+  position: relative;
 }
-.member-card:hover {
+
+.team-section-head {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.team-section-head .section-eyebrow {
+  margin-bottom: 8px;
+}
+.team-section-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 42px);
+  letter-spacing: 4px;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+/* Grid of 3 across — preserves each photo's full aspect ratio */
+.team-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.team-photo {
+  position: relative;
+  width: 100%;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.team-photo:hover {
   border-color: var(--border-strong);
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-md);
 }
-.member-avatar {
-  width: 68px; height: 68px;
-  border-radius: 50%;
-  margin: 0 auto 14px;
-  background: var(--accent-glow);
-  color: var(--accent);
-  display: grid;
-  place-items: center;
-  font-size: 26px;
-  border: 2px solid var(--border-strong);
+.team-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* NO object-fit, NO aspect-ratio — image keeps its natural shape */
 }
-.member-card h4 {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 4px;
-}
-.member-card .role {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-.member-socials {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 12px;
-}
-.member-socials a {
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  background: var(--surface2);
-  color: var(--accent);
-  display: grid;
-  place-items: center;
-  font-size: 11px;
-  border: 1px solid var(--border);
-  transition: background-color 0.15s, color 0.15s;
-}
-.member-socials a:hover { background: var(--accent); color: #fff; }
 
+@media (max-width: 900px) {
+  .team-photo-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .team-photo-grid { grid-template-columns: 1fr; }
+  .team-sections { gap: 60px; }
+}
 /* ============================================================
    GALLERY
    ============================================================ */
