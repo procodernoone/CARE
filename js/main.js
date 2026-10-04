@@ -1,6 +1,6 @@
 /* ============================================================
-   Team C.A.R.E — main.js (V5)
-   All behaviors + Font Awesome icons + performance-guarded hero.
+   Team C.A.R.E — main.js (V6)
+   Font Awesome icons, awards scroll-stack, performance-guarded hero.
    ============================================================ */
 (function () {
   'use strict';
@@ -10,7 +10,6 @@
   const isTouchDevice =
     window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
-  /* Font Awesome icon map */
   const ICONS = {
     plane:   'fa-solid fa-plane',
     globe:   'fa-solid fa-earth-asia',
@@ -91,7 +90,6 @@
     const el = document.getElementById('awardsList');
     if (!el || !window.CARE || !window.CARE.achievements) return;
 
-    el.className = 'awards-list';
     const items = window.CARE.achievements.items;
 
     el.innerHTML = items.map(a => {
@@ -102,23 +100,24 @@
         : '<div class="care-award-placeholder">' + icon('trophy') + '</div>';
       const descAttr = (a.desc || '').replace(/"/g, '&quot;');
       return (
-        '<article class="care-award" data-desc="' + descAttr + '" data-link="' + (a.link || '#') + '">' +
+        '<article class="care-award" data-badge="' + (a.badge || '') + '" data-desc="' + descAttr + '" data-link="' + (a.link || '#') + '">' +
           '<div class="care-award-img">' + imgSrc + '</div>' +
           '<div class="care-award-body">' +
             '<div class="care-award-eyebrow">' + eyebrow + '</div>' +
             '<h3>' + (a.title || '') + '</h3>' +
             '<span class="care-award-badge">' + badge + '</span>' +
+            '<button class="btn-outline">See details <i class="fa-solid fa-arrow-right"></i></button>' +
           '</div>' +
-          '<button class="btn-outline">See details <i class="fa-solid fa-arrow-right"></i></button>' +
         '</article>'
       );
     }).join('');
 
-    /* Update intro count */
     const intro = document.getElementById('awardsIntro');
     if (intro && items.length) {
-      intro.textContent = items.length + ' national and international awards earned by Team C.A.R.E — tap "See details" for the full story.';
+      intro.textContent = items.length + ' national and international awards earned by Team C.A.R.E — scroll to explore.';
     }
+
+    initAwardsScroll();
   }
 
   function renderTeam() {
@@ -141,9 +140,6 @@
     }).join('');
   }
 
-  /* =========================================================
-     GALLERY — masonry, blur-up, keyboard-nav lightbox
-     ========================================================= */
   function renderGallery() {
     const el = document.getElementById('galleryGrid');
     if (!el || !window.CARE || !window.CARE.gallery) return;
@@ -176,6 +172,55 @@
     });
   }
 
+  /* =========================================================
+     AWARDS SCROLL — intense stack fade
+     ========================================================= */
+  function initAwardsScroll() {
+    const cards = document.querySelectorAll('.care-award');
+    if (!cards.length) return;
+
+    if (prefersReducedMotion) {
+      cards.forEach(c => c.classList.add('in-view'));
+      return;
+    }
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          entry.target.classList.remove('leaving');
+        } else if (entry.boundingClientRect.top < 0) {
+          entry.target.classList.add('leaving');
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '-10% 0px -10% 0px' });
+
+    cards.forEach(c => obs.observe(c));
+
+    let ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const vh = window.innerHeight;
+        cards.forEach(card => {
+          const rect = card.getBoundingClientRect();
+          if (rect.bottom < vh * 0.15) {
+            card.classList.add('leaving');
+          } else if (rect.top < vh && rect.bottom > 0) {
+            card.classList.remove('leaving');
+          }
+        });
+        ticking = false;
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  /* =========================================================
+     GALLERY FILTER + LIGHTBOX
+     ========================================================= */
   function initGalleryFilter() {
     const buttons = document.querySelectorAll('.filter-btn');
     const items = document.querySelectorAll('.gallery-item');
@@ -281,7 +326,7 @@
   }
 
   /* =========================================================
-     AWARDS MODAL
+     AWARD MODAL
      ========================================================= */
   function initAwardModals() {
     const buttons = document.querySelectorAll('.care-award .btn-outline');
@@ -460,7 +505,7 @@
   }
 
   /* =========================================================
-     HERO CANVAS — performance-guarded
+     HERO CANVAS
      ========================================================= */
   function initHeroCanvas() {
     if (prefersReducedMotion || isTouchDevice) return;
