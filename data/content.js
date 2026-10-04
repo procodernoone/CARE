@@ -1,5 +1,7 @@
 /* ============================================================
-   Team C.A.R.E — content.js (V7 — 14 achievements)
+   Team C.A.R.E — content.js (V9)
+   Roadmap: prototype milestones + full achievement timeline.
+   Videos use their own first frame as thumbnail (no poster file).
    ============================================================ */
 window.CARE = {
 
@@ -57,6 +59,78 @@ window.CARE = {
       { image: "./images/awards/12.jpg", title: "Technovation 2025", desc: "Champion in the Hardware & Assistive Tech Project Exhibition category at Technovation 2025, organized by Saint Joseph Higher Secondary School, Dhaka.", year: "2025", date: "April 2025", badge: "National", link: "https://www.facebook.com/teamcare.bd" },
       { image: "./images/awards/13.jpg", title: "DRMC Tech International Fest 2025", desc: "1st Runner-Up in the Tech Project Display (Senior Division) category at DRMC Tech International Fest 2025, organized by DRMC IT Club.", year: "2025", date: "February 2025", badge: "National", link: "https://www.facebook.com/teamcare.bd" },
       { image: "./images/awards/14.jpg", title: "DRMC Math Fest 2025", desc: "1st Runner-Up in the Applied Math & Engineering Innovation category at DRMC Math Fest 2025, organized by DRMC Math Club.", year: "2025", date: "January 2025", badge: "National", link: "https://www.facebook.com/teamcare.bd" }
+    ]
+  },
+
+  roadmap: {
+    items: [
+      { kind: "milestone", date: "MAY 2025", title: "C.A.R.E WHEELCHAIR V1", status: "done",
+        desc: "The first functional prototype — hand gesture control, basic IoT integration, and smart mobility assistance.",
+        media: { type: "video", src: "./videos/1.mp4" } },
+
+      { kind: "milestone", date: "NOVEMBER 2025", title: "C.A.R.E WHEELCHAIR V2", status: "done",
+        desc: "Redesigned chassis with head gesture control, improved responsiveness, and enhanced safety systems.",
+        media: { type: "image", src: "./images/roadmap/2.jpg" } },
+
+      { kind: "milestone", date: "AUGUST 2026", title: "C.A.R.E WHEELCHAIR V3", status: "done",
+        desc: "AI-powered obstacle detection, voice interaction, smart navigation, live monitoring, and IoT dashboard.",
+        media: { type: "video", src: "./videos/3.mp4" } },
+
+      { kind: "achievement", date: "SEPTEMBER 2026", title: "WORLD ROBOT GAMES (WRG) BANGLADESH 2026", status: "done",
+        desc: "Gold Medalist (National Champion) — Robo Innovator (Senior). Organized by Tech Autocrats.",
+        media: { type: "image", src: "./images/awards/1.jpg" } },
+
+      { kind: "achievement", date: "AUGUST 2026", title: "WORLD ROBOT OLYMPIAD (WRO) BANGLADESH 2026", status: "done",
+        desc: "Gold Medalist (National Champion) — Future Innovators (Senior). Organized by BdOSN & WRO Bangladesh.",
+        media: { type: "image", src: "./images/awards/2.jpg" } },
+
+      { kind: "achievement", date: "JUNE 2026", title: "STARTUP BANGLADESH SCIENCE PROJECT COMPETITION 2026", status: "done",
+        desc: "Top 4 Innovator — Social Impact & Scientific Innovation. Prize received from the Honorable Prime Minister.",
+        media: { type: "image", src: "./images/awards/9.jpg" } },
+
+      { kind: "achievement", date: "MAY 2026", title: "FIBONACCI ROBOT OLYMPIAD NATIONAL 2026", status: "done",
+        desc: "Gold Medalist (National Champion) — Health Tech Category.",
+        media: { type: "image", src: "./images/awards/3.jpg" } },
+
+      { kind: "achievement", date: "MAY 2026", title: "GLOBAL ROBOTICS AND INNOVATION CHAMPIONSHIP (GRIC) 2026", status: "done",
+        desc: "Honorable Mention — Robotics and IoT. Organized by Tech Autocrats.",
+        media: { type: "image", src: "./images/awards/5.jpg" } },
+
+      { kind: "achievement", date: "MAY 2026", title: "WORLD INVENTION COMPETITION AND EXHIBITION (WICE) NATIONAL 2026", status: "done",
+        desc: "Silver Medalist — Health Tech. Organized by IYSA & National Partners.",
+        media: { type: "image", src: "./images/awards/6.jpg" } },
+
+      { kind: "achievement", date: "FEBRUARY 2026", title: "16TH DRMC INTERNATIONAL SCIENCE CARNIVAL 2026", status: "done",
+        desc: "Champion (National Champion) — Mechanical & Hardware Project Display.",
+        media: { type: "image", src: "./images/awards/7.jpg" } },
+
+      { kind: "achievement", date: "DECEMBER 2025", title: "17TH APICTA AWARDS 2025 — KAOHSIUNG, TAIWAN", status: "done",
+        desc: "Top 6 International Finalist (6th Position) — Inclusion and Community Services.",
+        media: { type: "image", src: "./images/awards/4.jpg" } },
+
+      { kind: "achievement", date: "OCTOBER 2025", title: "BANGLADESH ICT AND INNOVATION AWARDS 2025", status: "done",
+        desc: "Champion — Inclusion and Community Services.",
+        media: { type: "image", src: "./images/awards/8.jpg" } },
+
+      { kind: "achievement", date: "JUNE 2025", title: "46TH NATIONAL SCIENCE AND TECHNOLOGY WEEK (NATIONAL ROUND) 2025", status: "done",
+        desc: "Special 3rd Position — Senior Project Display (National Level).",
+        media: { type: "image", src: "./images/awards/10.jpg" } },
+
+      { kind: "achievement", date: "MAY 2025", title: "46TH NATIONAL SCIENCE AND TECHNOLOGY WEEK (DISTRICT ROUND) 2025", status: "done",
+        desc: "District Champion — Senior Science Project Display.",
+        media: { type: "image", src: "./images/awards/11.jpg" } },
+
+      { kind: "achievement", date: "APRIL 2025", title: "TECHNOVATION 2025", status: "done",
+        desc: "Champion — Hardware & Assistive Tech Project Exhibition.",
+        media: { type: "image", src: "./images/awards/12.jpg" } },
+
+      { kind: "achievement", date: "FEBRUARY 2025", title: "DRMC TECH INTERNATIONAL FEST 2025", status: "done",
+        desc: "1st Runner-Up — Tech Project Display (Senior Division).",
+        media: { type: "image", src: "./images/awards/13.jpg" } },
+
+      { kind: "achievement", date: "JANUARY 2025", title: "DRMC MATH FEST 2025", status: "done",
+        desc: "1st Runner-Up — Applied Math & Engineering Innovation.",
+        media: { type: "image", src: "./images/awards/14.jpg" } }
     ]
   }
 
