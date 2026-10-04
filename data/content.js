@@ -1,3 +1,46 @@
+/* ============================================================
+   Team C.A.R.E — content.js (V7 — 14 achievements)
+   ============================================================ */
+window.CARE = {
+
+  site: {
+    stat_awards: "14",       stat_awards_plus: true,
+    stat_members: "3",       stat_members_plus: false,
+    stat_projects: "3",      stat_projects_plus: true,
+    stat_years: "2",         stat_years_plus: true,
+    contact_email: "teamcareofficial25@gmail.com",
+    contact_location: "Dhaka, Bangladesh",
+    contact_social: "@teamcare.bd"
+  },
+
+  team: {
+    members: [
+      { name: "Team Lead",      role: "Founder & Lead",    photo: "", linkedin: "", facebook: "" },
+      { name: "Research Head",  role: "R&D Division",      photo: "", linkedin: "", facebook: "" },
+      { name: "Software Lead",  role: "AI / ML Engineer",  photo: "", linkedin: "", facebook: "" },
+      { name: "Hardware Lead",  role: "Electronics & IoT", photo: "", linkedin: "", facebook: "" },
+      { name: "Design Lead",    role: "UX / Mechanical",   photo: "", linkedin: "", facebook: "" }
+    ]
+  },
+
+  gallery: {
+    photos: [
+      { image: "./images/gallery/photo-1.jpg", cat: "team" },
+      { image: "./images/gallery/photo-2.jpg", cat: "lab" },
+      { image: "./images/gallery/photo-3.jpg", cat: "awards" },
+      { image: "./images/gallery/photo-4.jpg", cat: "events" }
+    ]
+  },
+
+  news: {
+    items: [
+      { icon: "plane",  date: "Sept 20, 2026", title: "Team Represents Bangladesh at WICE Malaysia",   link: "https://www.facebook.com/teamcare.bd" },
+      { icon: "globe",  date: "Dec 01, 2025",  title: "APICTA Awards 2025 Winner in Taiwan",            link: "https://www.facebook.com/teamcare.bd" },
+      { icon: "trophy", date: "Oct 18, 2025",  title: "Champion at Bangladesh ICT & Innovation Award",  link: "https://www.facebook.com/teamcare.bd" },
+      { icon: "medal",  date: "May 03, 2025",  title: "Champion at 16th DRMC Science Carnival",         link: "https://www.facebook.com/teamcare.bd" }
+    ]
+  },
+
   achievements: {
     items: [
       { image: "./images/awards/1.jpg",  title: "World Robot Games (WRG) Bangladesh 2026", desc: "Gold Medalist (National Champion) in the Robo Innovator (Senior) category at World Robot Games Bangladesh 2026, organized by Tech Autocrats.", year: "2026", date: "September 2026", badge: "National", link: "https://www.facebook.com/teamcare.bd" },
@@ -16,3 +59,5 @@
       { image: "./images/awards/14.jpg", title: "DRMC Math Fest 2025", desc: "1st Runner-Up in the Applied Math & Engineering Innovation category at DRMC Math Fest 2025, organized by DRMC Math Club.", year: "2025", date: "January 2025", badge: "National", link: "https://www.facebook.com/teamcare.bd" }
     ]
   }
+
+};
